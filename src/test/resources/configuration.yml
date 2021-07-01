@@ -1,0 +1,8 @@
+petstore-api:
+  url: https://petstore.swagger.io/v2
+  endpoints:
+    pet: /pet
+    pet-image-upload: "pet/{petId}/uploadImage"
+    find-by-status: /pet/findByStatus
+    # Below endpoint allows GET/POST/DELETE operations
+    pet-by-id: "/pet/{petId}"
