@@ -9,10 +9,10 @@
         <relativePath/>
     </parent>
     <groupId>com.api.automation</groupId>
-    <artifactId>rest-assured-api-automation</artifactId>
+    <artifactId>petstore-api-automation</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rest-assured-api-automation</name>
-    <description>Basic test automation project with Rest Assured and Spring Boot</description>
+    <name>petstore-automation</name>
+    <description>Petstore test automation project with Rest Assured and Spring Boot</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -34,11 +34,15 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
     </dependencies>
 
