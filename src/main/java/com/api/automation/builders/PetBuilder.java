@@ -5,21 +5,26 @@ import com.api.automation.pojo.Pet;
 import com.api.automation.pojo.Status;
 import com.api.automation.pojo.Tag;
 
-import java.util.List;
+import java.util.Collections;
+
+import static com.api.automation.utils.FakeDataGenerator.*;
 
 public final class PetBuilder {
 
-    public static Pet.PetBuilder petBasicRequestWithRequiredParams(int id, String name, List<String> photoUrls) {
+    public static Pet.PetBuilder petRequiredData() {
         return Pet.builder()
-                .id(id)
-                .name(name)
-                .photoUrls(photoUrls);
+                .id(generateRandomInt())
+                .name(generateRandomPetName())
+                .photoUrls(Collections.singletonList(generateRandomUrl()));
     }
 
-    public static Pet.PetBuilder petRequestWithAllParams(int id, String name, List<String> photoUrls, Category category, Status status, List<Tag> tags) {
-        return petBasicRequestWithRequiredParams(id, name, photoUrls)
-                .category(category)
+    public static Pet.PetBuilder petDataWithAllParams(Status status) {
+        return petRequiredData()
+                .category(Category.builder()
+                        .id(generateRandomInt())
+                        .name(generateRandomPetName())
+                        .build())
                 .status(status)
-                .tags(tags);
+                .tags(Collections.singletonList(Tag.builder().id(generateRandomInt()).name(generateRandomPetName()).build()));
     }
 }

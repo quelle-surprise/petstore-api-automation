@@ -1,14 +1,12 @@
 package com.api.automation.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
-@Getter
-@AllArgsConstructor
+
+@Jacksonized
 public enum Status {
-    AVAILABLE("available"),
-    PENDING("pending"),
-    SOLD("sold");
+    available,
+    pending,
+    sold;
 
-    private final String statusValue;
 }

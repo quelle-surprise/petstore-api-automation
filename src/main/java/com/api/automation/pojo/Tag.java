@@ -1,13 +1,18 @@
 package com.api.automation.pojo;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
+import lombok.extern.jackson.Jacksonized;
 
 @Data
-@AllArgsConstructor
+@Builder
+@Jacksonized
 public class Tag {
 
+    @JsonProperty("id")
     private int id;
+    @JsonProperty("name")
     private String name;
 
 }

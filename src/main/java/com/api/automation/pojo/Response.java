@@ -1,7 +1,6 @@
 package com.api.automation.pojo;
 
 import lombok.Data;
-import lombok.extern.jackson.Jacksonized;
 
 @Data
 public class Response {

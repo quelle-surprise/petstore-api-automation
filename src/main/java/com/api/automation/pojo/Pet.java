@@ -1,5 +1,6 @@
 package com.api.automation.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
@@ -7,7 +8,8 @@ import lombok.extern.jackson.Jacksonized;
 import java.util.List;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
+@AllArgsConstructor
 @Jacksonized
 public class Pet {
 

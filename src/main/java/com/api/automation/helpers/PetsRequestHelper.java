@@ -18,6 +18,9 @@ public class PetsRequestHelper {
     @Value("${petstore-api.endpoints.pet}")
     private String petCreateOrUpdateEndpoint;
 
+    @Value("${petstore-api.endpoints.pet-by-id}")
+    private String petByIdEndpoint;
+
     private final RestAssuredHelper restAssuredHelper;
 
     public PetsRequestHelper(RestAssuredHelper restAssuredHelper) {
@@ -29,19 +32,19 @@ public class PetsRequestHelper {
     }
 
     public Response addNewPet(Pet pet) {
-        return restAssuredHelper.sendPost(petsRequestSpecification(), petCreateOrUpdateEndpoint, pet);
+        return restAssuredHelper.sendPost(petsRequestSpecificationBuilder().build(), petCreateOrUpdateEndpoint, pet);
     }
 
     public Response updateExistingPet(Pet pet) {
-        return null;
+        return restAssuredHelper.sendPut(petsRequestSpecificationBuilder().build(), petCreateOrUpdateEndpoint, pet);
     }
 
     public Response findPetByGivenStatus() {
         return null;
     }
 
-    public Response findPetById() {
-        return null;
+    public Response findPetById(int id) {
+        return restAssuredHelper.sendGet(petsRequestSpecificationBuilder().addPathParam("petId", id).build(), petByIdEndpoint);
     }
 
     /*
@@ -55,11 +58,10 @@ public class PetsRequestHelper {
         return null;
     }
 
-    private RequestSpecification petsRequestSpecification() {
+    private RequestSpecBuilder petsRequestSpecificationBuilder() {
         return new RequestSpecBuilder()
                 .setBaseUri(petsUrl)
                 .setContentType(ContentType.JSON)
-                .log(LogDetail.ALL)
-                .build();
+                .log(LogDetail.ALL);
     }
 }
