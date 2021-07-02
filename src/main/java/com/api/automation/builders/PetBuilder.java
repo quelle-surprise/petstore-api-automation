@@ -7,7 +7,9 @@ import com.api.automation.pojo.Tag;
 
 import java.util.Collections;
 
-import static com.api.automation.utils.FakeDataGenerator.*;
+import static com.api.automation.utils.FakeDataGenerator.generateRandomInt;
+import static com.api.automation.utils.FakeDataGenerator.generateRandomPetName;
+import static com.api.automation.utils.FakeDataGenerator.generateRandomUrl;
 
 public final class PetBuilder {
 

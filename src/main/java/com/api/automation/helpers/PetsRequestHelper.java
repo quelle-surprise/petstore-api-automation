@@ -55,7 +55,7 @@ public class PetsRequestHelper {
     }
 
     public Response deletePetById(int petId) {
-        return null;
+        return restAssuredHelper.sendDelete(petsRequestSpecificationBuilder().addPathParam("petId", petId).build(), petByIdEndpoint);
     }
 
     private RequestSpecBuilder petsRequestSpecificationBuilder() {
