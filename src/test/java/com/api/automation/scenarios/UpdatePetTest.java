@@ -1,17 +1,18 @@
 package com.api.automation.scenarios;
 
-import com.api.automation.builders.PetBuilder;
 import com.api.automation.helpers.PetsRequestHelper;
 import com.api.automation.pojo.ApiResponse;
 import com.api.automation.pojo.Pet;
-import io.qameta.allure.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 
 import static com.api.automation.assertions.CommonAssertions.badInputAssertion;
-import static com.api.automation.pojo.Status.*;
+import static com.api.automation.pojo.Status.available;
+import static com.api.automation.pojo.Status.pending;
+import static com.api.automation.pojo.Status.sold;
 import static com.api.automation.utils.FakeDataGenerator.generateRandomPetName;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -20,15 +21,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.with;
 import static org.awaitility.pollinterval.FibonacciPollInterval.fibonacci;
 
+@DisplayName("Tests for updating pets")
 public class UpdatePetTest extends BaseTest {
 
     @Autowired
     private PetsRequestHelper petsRequestHelper;
 
     @Test
-    @Description("Test for updating an existing pet with name and status via PUT /pet endpoint")
+    @DisplayName("Updating currently existing pet via /pet endpoint")
     public void shouldUpdateExistingPet() {
-        // precondition - create new pet
         final Pet requestBody = petsRequestHelper.createPetAndAssert(available);
 
         final Pet updatedBody = requestBody.toBuilder()
@@ -43,9 +44,8 @@ public class UpdatePetTest extends BaseTest {
     }
 
     @Test
-    @Description("Test for updating existing pet data with form data")
+    @DisplayName("Updating currently existing pet via /pet/{petId} endpoint")
     public void shouldUpdateExistingPetWithFormData() {
-        // precondition - create new pet
         final Pet requestBody = petsRequestHelper.createPetAndAssert(available);
         final Pet updatedBody = requestBody.toBuilder().name(generateRandomPetName()).status(pending).build();
 
@@ -56,19 +56,9 @@ public class UpdatePetTest extends BaseTest {
         });
     }
 
-    @Test
-    @Description("Test for creating new Pet via Update(PUT) Endpoint")
-    public void shouldCreateNewPetViaUpdateEndpoint() {
-        final Pet requestBody = PetBuilder.petDataWithAllParams(available).build();
-        response = petsRequestHelper.updatePet(requestBody);
-
-        assertThat(response.getStatusCode()).isEqualTo(SC_OK);
-        petsRequestHelper.findByIdAndAssert(requestBody);
-    }
-
 
     @Test
-    @Description("Test for updating image for existing pet")
+    @DisplayName("Updating image for existing pet via /pet/{petId}/uploadImage")
     public void shouldUpdateImageForExistingPet() {
         final Pet requestBody = petsRequestHelper.createPetAndAssert(available);
 
@@ -82,7 +72,7 @@ public class UpdatePetTest extends BaseTest {
     }
 
     @Test
-    @Description("Test for updating pet with incorrect request body")
+    @DisplayName("Updating pet with incorrect update data")
     public void shouldReturn400ForIncorrectUpdateData() {
         ApiResponse apiResponse = petsRequestHelper.updatePet(INCORRECT_BODY_WITH_WRONG_ID).as(ApiResponse.class);
 

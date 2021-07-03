@@ -1,0 +1,8 @@
+I chose Allure as a tool for displaying test results for task.
+
+Why ALlure?
+- It's really lightweight open source framework that provides clear graphical report.
+- Really easy to use, couple of dependencies needed for Java
+- Good cooperation with JUnit5, in really cool way with some annotations our test report could be beautified.
+- Test report is generate as html file, it's also served wia web server, so it can be really attached to any CI/CD pipeline.
+- Good support for almost every CI/CD tool, there's plugin for Jenkins as well :)

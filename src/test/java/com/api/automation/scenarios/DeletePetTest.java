@@ -3,7 +3,7 @@ package com.api.automation.scenarios;
 import com.api.automation.helpers.PetsRequestHelper;
 import com.api.automation.pojo.ApiResponse;
 import com.api.automation.pojo.Pet;
-import io.qameta.allure.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,15 +16,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.with;
 import static org.awaitility.pollinterval.FibonacciPollInterval.fibonacci;
 
+@DisplayName("Tests for pets deletion")
 public class DeletePetTest extends BaseTest {
 
     @Autowired
     private PetsRequestHelper petsRequestHelper;
 
     @Test
-    @Description("Test for deletion of already existing pet")
+    @DisplayName("Pet deletion via /pet/{petId} endpoint")
     public void shouldDeleteExistingPet() {
-        // Precondition
         final Pet requestBody = petsRequestHelper.createPetAndAssert(available);
 
         with().pollInterval(fibonacci(MILLISECONDS)).await().atMost(30, SECONDS).untilAsserted(() -> {
@@ -38,7 +38,7 @@ public class DeletePetTest extends BaseTest {
     }
 
     @Test
-    @Description("Test for check 404 response after executing deletion endpoint for not existing pet Id")
+    @DisplayName("Pet deletion via /pet/{petId} endpoint with not existing ID - 404 expected")
     public void shouldReturn404ForNotExistingPetWhileDeletion() {
         response = petsRequestHelper.deletePetById(-1);
 

@@ -2,13 +2,13 @@ package com.api.automation.helpers;
 
 import com.api.automation.pojo.Pet;
 import com.api.automation.pojo.Status;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import java.io.File;
 
 import static com.api.automation.builders.PetBuilder.petDataWithAllParams;
@@ -84,6 +84,7 @@ public class PetsRequestHelper {
     private RequestSpecBuilder petsRequestSpecificationBuilder() {
         return new RequestSpecBuilder()
                 .setBaseUri(petsUrl)
+                .addFilter(new AllureRestAssured())
                 .log(LogDetail.ALL);
     }
 
