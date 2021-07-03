@@ -1,6 +1,6 @@
-Testing assignment developed for PetStoreService - https://petstore.swagger.io/
+# Testing assignment developed for PetStoreService - https://petstore.swagger.io/
 
-Used tools:
+## Used tools:
 
 * Spring Boot 
 * Rest Assured
@@ -10,11 +10,12 @@ Used tools:
 * Allure
 * Awaitility
 
-How to execute tests
+## How to execute tests
 
 Running tests without report: `mvn clean test`
 
 To run tests with Allure report use below commands (report will be automaticaly served in the default browser):
+
 * `mvn clean test allure:report`
 * `mvn allure:serve`
     
