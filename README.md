@@ -1,6 +1,6 @@
-##Testing assignment developed for PetStoreService - https://petstore.swagger.io/
+Testing assignment developed for PetStoreService - https://petstore.swagger.io/
 
-###Used tools:
+Used tools:
 
 * Spring Boot 
 * Rest Assured
@@ -10,7 +10,7 @@
 * Allure
 * Awaitility
 
-###How to execute tests
+How to execute tests
 
 Running tests without report: `mvn clean test`
 
