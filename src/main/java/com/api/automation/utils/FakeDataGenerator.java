@@ -13,7 +13,7 @@ public class FakeDataGenerator {
     static final Faker faker = new Faker();
 
     public static Long generateRandomNumber() {
-        return faker.number().randomNumber(10, false);
+        return faker.number().randomNumber(15, false);
     }
 
     public static String generateRandomAnimal() {

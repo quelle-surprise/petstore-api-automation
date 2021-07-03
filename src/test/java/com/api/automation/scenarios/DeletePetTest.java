@@ -3,6 +3,7 @@ package com.api.automation.scenarios;
 import com.api.automation.helpers.PetsRequestHelper;
 import com.api.automation.pojo.ApiResponse;
 import com.api.automation.pojo.Pet;
+import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +22,7 @@ public class DeletePetTest extends BaseTest {
     private PetsRequestHelper petsRequestHelper;
 
     @Test
+    @Description("Test for deletion of already existing pet")
     public void shouldDeleteExistingPet() {
         // Precondition
         final Pet requestBody = petsRequestHelper.createPetAndAssert(available);
@@ -36,6 +38,7 @@ public class DeletePetTest extends BaseTest {
     }
 
     @Test
+    @Description("Test for check 404 response after executing deletion endpoint for not existing pet Id")
     public void shouldReturn404ForNotExistingPetWhileDeletion() {
         response = petsRequestHelper.deletePetById(-1);
 

@@ -17,7 +17,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AddPetTest extends BaseTest {
-    
+
     @Autowired
     private PetsRequestHelper petsRequestHelper;
 
@@ -40,7 +40,7 @@ public class AddPetTest extends BaseTest {
     }
 
     @Test
-    @Description("Test for adding new pet to the store with incorrect request body")
+    @Description("Test for adding new pet incorrect request body")
     public void shouldReturn400ForIncorrectAddData() {
         ApiResponse response = petsRequestHelper.addNewPet(INCORRECT_BODY_WITH_WRONG_ID).body().as(ApiResponse.class);
 

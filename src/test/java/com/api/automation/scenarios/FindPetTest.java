@@ -49,7 +49,7 @@ public class FindPetTest extends BaseTest {
     }
 
     @Test
-    @Description("Test for finding existing pet by status - available, pending and sold")
+    @Description("Test for finding existing pet by provided Id")
     public void shouldFindExistingPetByProvidedId() {
         // precondition - create new pet
         final Pet requestBody = petsRequestHelper.createPetAndAssert(available);
@@ -58,6 +58,7 @@ public class FindPetTest extends BaseTest {
     }
 
     @Test
+    @Description("Test for check 404 response when given pet not exists")
     public void shouldReturn404ForNotExistingPetWhileFinding() {
         response = petsRequestHelper.findPetById(-1);
 

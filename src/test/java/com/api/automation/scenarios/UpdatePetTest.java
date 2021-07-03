@@ -8,15 +8,10 @@ import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import static com.api.automation.assertions.CommonAssertions.badInputAssertion;
-import static com.api.automation.pojo.Status.available;
-import static com.api.automation.pojo.Status.pending;
-import static com.api.automation.pojo.Status.sold;
+import static com.api.automation.pojo.Status.*;
 import static com.api.automation.utils.FakeDataGenerator.generateRandomPetName;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -62,6 +57,7 @@ public class UpdatePetTest extends BaseTest {
     }
 
     @Test
+    @Description("Test for creating new Pet via Update(PUT) Endpoint")
     public void shouldCreateNewPetViaUpdateEndpoint() {
         final Pet requestBody = PetBuilder.petDataWithAllParams(available).build();
         response = petsRequestHelper.updatePet(requestBody);
@@ -72,6 +68,7 @@ public class UpdatePetTest extends BaseTest {
 
 
     @Test
+    @Description("Test for updating image for existing pet")
     public void shouldUpdateImageForExistingPet() {
         final Pet requestBody = petsRequestHelper.createPetAndAssert(available);
 
@@ -85,6 +82,7 @@ public class UpdatePetTest extends BaseTest {
     }
 
     @Test
+    @Description("Test for updating pet with incorrect request body")
     public void shouldReturn400ForIncorrectUpdateData() {
         ApiResponse apiResponse = petsRequestHelper.updatePet(INCORRECT_BODY_WITH_WRONG_ID).as(ApiResponse.class);
 
