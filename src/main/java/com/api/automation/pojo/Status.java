@@ -7,6 +7,6 @@ import lombok.extern.jackson.Jacksonized;
 public enum Status {
     available,
     pending,
-    sold;
+    sold
 
 }

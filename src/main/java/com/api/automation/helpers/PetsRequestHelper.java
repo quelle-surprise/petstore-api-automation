@@ -6,9 +6,18 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
+
+import static com.api.automation.builders.PetBuilder.petDataWithAllParams;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.with;
+import static org.awaitility.pollinterval.FibonacciPollInterval.fibonacci;
 
 @Component
 public class PetsRequestHelper {
@@ -25,21 +34,28 @@ public class PetsRequestHelper {
     @Value("${petstore-api.endpoints.find-by-status}")
     private String findyByStatusEndpoint;
 
+    @Value("${petstore-api.endpoints.pet-image-upload}")
+    private String petImageUploadEndpoint;
+
     private final RestAssuredHelper restAssuredHelper;
 
     public PetsRequestHelper(RestAssuredHelper restAssuredHelper) {
         this.restAssuredHelper = restAssuredHelper;
     }
 
-    public Response uploadPetImage() {
-        return null;
+    public Response uploadPetImage(long petId, String additionalMetadata, File file) {
+        return restAssuredHelper.sendPostWithoutBody(petsRequestSpecificationBuilder()
+                .addPathParam("petId", petId)
+                .addParam("additionalMetadata", additionalMetadata)
+                .addMultiPart(file)
+                .build(), petImageUploadEndpoint);
     }
 
-    public Response addNewPet(Pet pet) {
+    public Response addNewPet(Object pet) {
         return restAssuredHelper.sendPost(petsRequestSpecificationBuilder().setContentType(ContentType.JSON).build(), petCreateOrUpdateEndpoint, pet);
     }
 
-    public Response updateExistingPet(Pet pet) {
+    public Response updatePet(Object pet) {
         return restAssuredHelper.sendPut(petsRequestSpecificationBuilder().setContentType(ContentType.JSON).build(), petCreateOrUpdateEndpoint, pet);
     }
 
@@ -69,5 +85,20 @@ public class PetsRequestHelper {
         return new RequestSpecBuilder()
                 .setBaseUri(petsUrl)
                 .log(LogDetail.ALL);
+    }
+
+    public void findByIdAndAssert(Pet petObject) {
+        with().pollInterval(fibonacci(MILLISECONDS)).await().atMost(10, SECONDS).untilAsserted(() -> {
+            Response response = findPetById(petObject.getId());
+            assertThat(response.getStatusCode()).isEqualTo(SC_OK);
+            assertThat(response.getBody().as(Pet.class)).isEqualTo(petObject);
+        });
+    }
+
+    public Pet createPetAndAssert(Status status) {
+        final Pet requestBody = petDataWithAllParams(status).build();
+        Response response = addNewPet(requestBody);
+        assertThat(response.getStatusCode()).isEqualTo(SC_OK);
+        return requestBody;
     }
 }

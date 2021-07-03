@@ -6,7 +6,6 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan(basePackages = {"com.api.automation"})
-@PropertySource(value = {"${env:classpath:configuration.yml}"})
 public class SpringConfig {
 
 }
