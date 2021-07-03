@@ -21,6 +21,13 @@ public class RestAssuredHelper {
                 .post(endpoint);
     }
 
+    public Response sendPostWithoutBody(RequestSpecification requestSpecification, String endpoint) {
+        return given()
+                .spec(requestSpecification)
+                .when()
+                .post(endpoint);
+    }
+
     public Response sendPut(RequestSpecification requestSpecification, String endpoint, Object body) {
         return requestSpecificationWithBody(requestSpecification, body)
                 .put(endpoint);

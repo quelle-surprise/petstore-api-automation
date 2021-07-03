@@ -11,14 +11,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import static com.api.automation.builders.PetBuilder.petDataWithAllParams;
 import static com.api.automation.builders.PetBuilder.petRequiredData;
 import static com.api.automation.pojo.Status.*;
 import static com.api.automation.utils.FakeDataGenerator.generateRandomPetName;
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -102,6 +100,13 @@ public class PetTest extends BaseTest {
     public void shouldUpdateExistingPetWithFormData() {
         // precondition - create new pet
         final Pet requestBody = createPetAndAssert(available);
+        final Pet updatedBody = requestBody.toBuilder().name(generateRandomPetName()).status(pending).build();
+
+        with().pollInterval(fibonacci(MILLISECONDS)).await().atMost(30, SECONDS).untilAsserted(() -> {
+            response = petsRequestHelper.updatePetWithFormData(requestBody.getId(), updatedBody);
+            assertThat(response.getStatusCode()).isEqualTo(SC_OK);
+            findByIdAndAssert(updatedBody);
+        });
     }
 
     @Test

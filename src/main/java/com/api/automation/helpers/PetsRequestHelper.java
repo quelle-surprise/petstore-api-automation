@@ -36,11 +36,11 @@ public class PetsRequestHelper {
     }
 
     public Response addNewPet(Pet pet) {
-        return restAssuredHelper.sendPost(petsRequestSpecificationBuilder().build(), petCreateOrUpdateEndpoint, pet);
+        return restAssuredHelper.sendPost(petsRequestSpecificationBuilder().setContentType(ContentType.JSON).build(), petCreateOrUpdateEndpoint, pet);
     }
 
     public Response updateExistingPet(Pet pet) {
-        return restAssuredHelper.sendPut(petsRequestSpecificationBuilder().build(), petCreateOrUpdateEndpoint, pet);
+        return restAssuredHelper.sendPut(petsRequestSpecificationBuilder().setContentType(ContentType.JSON).build(), petCreateOrUpdateEndpoint, pet);
     }
 
     public Response findPetsByGivenStatus(Status status) {
@@ -54,8 +54,11 @@ public class PetsRequestHelper {
     /*
         Allows update name and status of the given pet
      */
-    public Response updatePetWithFormData() {
-        return null;
+    public Response updatePetWithFormData(long petId, Pet petObject) {
+        return restAssuredHelper.sendPostWithoutBody(petsRequestSpecificationBuilder()
+                .addPathParam("petId", petId)
+                .addQueryParam("name", petObject.getName())
+                .addQueryParam("status", petObject.getStatus()).build(), petByIdEndpoint);
     }
 
     public Response deletePetById(long petId) {
@@ -65,7 +68,6 @@ public class PetsRequestHelper {
     private RequestSpecBuilder petsRequestSpecificationBuilder() {
         return new RequestSpecBuilder()
                 .setBaseUri(petsUrl)
-                .setContentType(ContentType.JSON)
                 .log(LogDetail.ALL);
     }
 }
