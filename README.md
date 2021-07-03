@@ -20,3 +20,4 @@ To run tests with Allure report use below commands (report will be automaticaly 
 * `mvn allure:serve`
     
   
+Created by Jakub Piotrowski
