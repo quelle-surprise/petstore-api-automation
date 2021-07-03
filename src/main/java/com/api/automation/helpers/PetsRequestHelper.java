@@ -1,6 +1,7 @@
 package com.api.automation.helpers;
 
 import com.api.automation.pojo.Pet;
+import com.api.automation.pojo.Status;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
@@ -21,6 +22,9 @@ public class PetsRequestHelper {
     @Value("${petstore-api.endpoints.pet-by-id}")
     private String petByIdEndpoint;
 
+    @Value("${petstore-api.endpoints.find-by-status}")
+    private String findyByStatusEndpoint;
+
     private final RestAssuredHelper restAssuredHelper;
 
     public PetsRequestHelper(RestAssuredHelper restAssuredHelper) {
@@ -39,11 +43,11 @@ public class PetsRequestHelper {
         return restAssuredHelper.sendPut(petsRequestSpecificationBuilder().build(), petCreateOrUpdateEndpoint, pet);
     }
 
-    public Response findPetByGivenStatus() {
-        return null;
+    public Response findPetsByGivenStatus(Status status) {
+        return restAssuredHelper.sendGet(petsRequestSpecificationBuilder().addQueryParam("status", status).build(), findyByStatusEndpoint);
     }
 
-    public Response findPetById(int id) {
+    public Response findPetById(long id) {
         return restAssuredHelper.sendGet(petsRequestSpecificationBuilder().addPathParam("petId", id).build(), petByIdEndpoint);
     }
 
@@ -54,7 +58,7 @@ public class PetsRequestHelper {
         return null;
     }
 
-    public Response deletePetById(int petId) {
+    public Response deletePetById(long petId) {
         return restAssuredHelper.sendDelete(petsRequestSpecificationBuilder().addPathParam("petId", petId).build(), petByIdEndpoint);
     }
 

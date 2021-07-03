@@ -8,12 +8,12 @@ import java.util.Locale;
 
 public class FakeDataGenerator {
 
-    private static final String URL_PATTERN = "https://[a-z1-9]{10}\\.dummycom/photos/1";
+    private static final String URL_PATTERN = "https://[a-z1-9]{10}\\.dummycom/photos/[1-9]{2}\\.jpg";
     static final FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"), new RandomService());
     static final Faker faker = new Faker();
 
-    public static int generateRandomInt() {
-        return faker.number().numberBetween(50, 124201);
+    public static Long generateRandomNumber() {
+        return faker.number().randomNumber(10, false);
     }
 
     public static String generateRandomAnimal() {
@@ -26,9 +26,5 @@ public class FakeDataGenerator {
 
     public static String generateRandomUrl() {
         return fakeValuesService.regexify(URL_PATTERN);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(generateRandomPetName());
     }
 }

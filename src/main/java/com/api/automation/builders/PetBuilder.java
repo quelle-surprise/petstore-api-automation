@@ -7,15 +7,13 @@ import com.api.automation.pojo.Tag;
 
 import java.util.Collections;
 
-import static com.api.automation.utils.FakeDataGenerator.generateRandomInt;
-import static com.api.automation.utils.FakeDataGenerator.generateRandomPetName;
-import static com.api.automation.utils.FakeDataGenerator.generateRandomUrl;
+import static com.api.automation.utils.FakeDataGenerator.*;
 
 public final class PetBuilder {
 
     public static Pet.PetBuilder petRequiredData() {
         return Pet.builder()
-                .id(generateRandomInt())
+                .id(generateRandomNumber())
                 .name(generateRandomPetName())
                 .photoUrls(Collections.singletonList(generateRandomUrl()));
     }
@@ -23,10 +21,10 @@ public final class PetBuilder {
     public static Pet.PetBuilder petDataWithAllParams(Status status) {
         return petRequiredData()
                 .category(Category.builder()
-                        .id(generateRandomInt())
-                        .name(generateRandomPetName())
+                        .id(generateRandomNumber())
+                        .name(generateRandomAnimal())
                         .build())
                 .status(status)
-                .tags(Collections.singletonList(Tag.builder().id(generateRandomInt()).name(generateRandomPetName()).build()));
+                .tags(Collections.singletonList(Tag.builder().id(generateRandomNumber()).name(generateRandomPetName()).build()));
     }
 }

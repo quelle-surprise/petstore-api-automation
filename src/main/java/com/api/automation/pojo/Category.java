@@ -9,6 +9,6 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class Category {
 
-    private int id;
+    private long id;
     private String name;
 }
