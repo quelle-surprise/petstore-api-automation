@@ -1,4 +1,4 @@
-# Testing assignment developed for PetStoreService - https://petstore.swagger.io/
+# Example of API automation developed for PetStoreService - https://petstore.swagger.io/
 
 ## Used tools:
 
@@ -19,8 +19,6 @@ To run tests with Allure report use below commands (report will be automaticaly 
 * `mvn clean test allure:report`
 * `mvn allure:serve`
     
-  
-Created by Jakub Piotrowski
 #### General Allure report:
 ![General Allure report](https://media.discordapp.net/attachments/861178984499118093/861179009148649533/unknown.png?width=1295&height=611)  
 

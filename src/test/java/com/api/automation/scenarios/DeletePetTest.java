@@ -3,6 +3,7 @@ package com.api.automation.scenarios;
 import com.api.automation.helpers.PetsRequestHelper;
 import com.api.automation.pojo.ApiResponse;
 import com.api.automation.pojo.Pet;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,11 @@ public class DeletePetTest extends BaseTest {
     public void shouldDeleteExistingPet() {
         final Pet requestBody = petsRequestHelper.createPetAndAssert(available);
 
-        with().pollInterval(fibonacci(MILLISECONDS)).await().atMost(30, SECONDS).untilAsserted(() -> {
-            response = petsRequestHelper.deletePetById(requestBody.getId());
-            assertThat(response.getStatusCode()).isEqualTo(SC_OK);
-            ApiResponse apiResponse = response.getBody().as(ApiResponse.class);
-            assertThat(apiResponse.getCode()).isEqualTo(200);
-            assertThat(apiResponse.getType()).isEqualTo("unknown");
-            assertThat(apiResponse.getMessage()).isEqualTo(Long.toString(requestBody.getId()));
-        });
+        petsRequestHelper.findByIdAndAssert(requestBody);
+
+        assertThatPetWasSuccessfullyDeleted(requestBody, petsRequestHelper.deletePetById(requestBody.getId()));
     }
+
 
     @Test
     @DisplayName("Pet deletion via /pet/{petId} endpoint with not existing ID - 404 expected")
@@ -44,4 +41,15 @@ public class DeletePetTest extends BaseTest {
 
         assertThat(response.getStatusCode()).isEqualTo(SC_NOT_FOUND);
     }
+
+    private void assertThatPetWasSuccessfullyDeleted(Pet requestBody, Response response) {
+        with().pollInterval(fibonacci(MILLISECONDS)).await().atMost(30, SECONDS).untilAsserted(() -> {
+            assertThat(response.getStatusCode()).isEqualTo(SC_OK);
+            ApiResponse apiResponse = response.getBody().as(ApiResponse.class);
+            assertThat(apiResponse.getCode()).isEqualTo(200);
+            assertThat(apiResponse.getType()).isEqualTo("unknown");
+            assertThat(apiResponse.getMessage()).isEqualTo(Long.toString(requestBody.getId()));
+        });
+    }
+
 }

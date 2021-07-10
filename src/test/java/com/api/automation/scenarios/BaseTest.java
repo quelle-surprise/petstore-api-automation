@@ -11,7 +11,5 @@ import org.springframework.test.context.TestPropertySource;
 @TestPropertySource(properties = {"spring.config.location=classpath:configuration.yml"})
 public class BaseTest {
 
-    public static final String INCORRECT_BODY_WITH_WRONG_ID = "{ \"id\": testValue}";
-
     protected Response response;
 }

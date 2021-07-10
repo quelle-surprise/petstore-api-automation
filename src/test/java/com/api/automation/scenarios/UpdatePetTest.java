@@ -14,6 +14,7 @@ import static com.api.automation.pojo.Status.available;
 import static com.api.automation.pojo.Status.pending;
 import static com.api.automation.pojo.Status.sold;
 import static com.api.automation.utils.FakeDataGenerator.generateRandomPetName;
+import static com.api.automation.utils.TestUtils.INCORRECT_BODY_WITH_WRONG_ID;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.apache.http.HttpStatus.SC_OK;

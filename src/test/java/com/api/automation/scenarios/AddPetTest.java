@@ -14,6 +14,7 @@ import static com.api.automation.assertions.CommonAssertions.badInputAssertion;
 import static com.api.automation.builders.PetBuilder.petDataWithAllParams;
 import static com.api.automation.builders.PetBuilder.petRequiredData;
 import static com.api.automation.pojo.Status.available;
+import static com.api.automation.utils.TestUtils.INCORRECT_BODY_WITH_WRONG_ID;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 
